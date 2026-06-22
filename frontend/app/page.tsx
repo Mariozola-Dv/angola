@@ -11,9 +11,9 @@ export default function LoginPage() {
   
   const features = ["Agricultura", "Infraestrutura", "Dados de Satélite", "Inteligência Artificial", "Marketplace", "Análises Avançadas"];
 
-  const handleSignup = async (e) => {
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.currentTarget);
     const res = await fetch("http://localhost:8000/auth/register", { method: "POST", body: formData });
     const data = await res.json();
     if (data.status === "ok") {
@@ -24,9 +24,9 @@ export default function LoginPage() {
     }
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.currentTarget);
     const res = await fetch("http://localhost:8000/auth/login", { method: "POST", body: formData });
     const data = await res.json();
     
@@ -34,9 +34,6 @@ export default function LoginPage() {
 
     if (data.status === "ok") {
       localStorage.setItem("user_id", data.user_id);
-      
-      // Como o dashboard ainda não existe, redirecionamos sempre para a tela de seleção
-      // Isso elimina o erro 404 e mantém o usuário no fluxo existente.
       router.push("/selecionar-perfil");
     } else {
       alert(data.mensagem || "Credenciais inválidas");
