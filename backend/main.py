@@ -81,8 +81,7 @@ async def processar_analise(texto: str = Form("Analise este território."), file
             if response.status_code != 200:
                 return {"status": "erro", "info": "Servidor de IA indisponível"}
 
-            output_clean = response.json().get("output_text", "").replace("```json", "").replace("
-```", "").strip()
+            output_clean = response.json().get("output_text", "").replace("```json", "").replace("```", "").strip()
             data = json.loads(output_clean)
             
             projecoes = data.get("projecoes", {})
@@ -125,4 +124,3 @@ def set_workspace(user_id: int = Form(...), workspace: str = Form(...), db: Sess
         user.workspace_type = workspace; user.is_configured = True; db.commit()
         return {"status": "ok"}
     return {"status": "erro", "mensagem": "Usuário não encontrado"}
-# Para rodar: python -m uvicorn main:app --reload
