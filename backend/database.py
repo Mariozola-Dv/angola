@@ -1,8 +1,10 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-# A mesma URL que você já estava usando
-DATABASE_URL = "postgresql://postgres:123456@localhost:5432/agritwin"
+# O Railway injeta automaticamente a variável DATABASE_URL
+# Se ela não existir, usa o localhost (para rodar na sua máquina)
+DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://postgres:123456@localhost:5432/agritwin")
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
