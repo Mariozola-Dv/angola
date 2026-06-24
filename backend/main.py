@@ -14,13 +14,11 @@ from database import get_db
 from models import User
 
 # Inicialização segura: A chave é lida do ambiente
-# Certifique-se de adicionar OPENAI_API_KEY no painel de Variáveis do Railway
 client_openai = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 app = FastAPI()
 
 # Configuração Dinâmica de URL para Produção
-# O Railway injetará a URL pública automaticamente se você configurá-la nas variáveis
 BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
 
 # Configuração de Pasta Estática
@@ -32,14 +30,15 @@ if not os.path.exists(STATIC_DIR):
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
-# Configuração de CORS para permitir comunicação com o front-end na Vercel
-# Substitua pela sua URL real da Vercel quando a tiver em mãos
+# --- ALTERAÇÃO FEITA AQUI ---
+# Configuração de CORS para permitir comunicação apenas com o seu front-end na Vercel
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"], # Mantenha "*" para teste inicial, depois troque pela sua URL da Vercel
+    allow_origins=["https://angola-nu.vercel.app"], 
     allow_methods=["*"],
     allow_headers=["*"],
 )
+# ----------------------------
 
 API_URL = "https://vanessa-gateway-api.tuyenecomesso.com/v1/inference"
 TOKEN = "vkg_live_yl7naJYI0nJbiQK9b2SaApJH32qImT6x"
@@ -129,7 +128,6 @@ def set_workspace(user_id: int = Form(...), workspace: str = Form(...), db: Sess
         return {"status": "ok"}
     return {"status": "erro", "mensagem": "Usuário não encontrado"}
 
-# O Railway gerencia a execução através do comando do Procfile ou comando de inicialização
 if __name__ == "__main__":
     import uvicorn
     port = int(os.getenv("PORT", 8000))
