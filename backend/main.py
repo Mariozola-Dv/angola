@@ -19,7 +19,8 @@ client_openai = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 app = FastAPI()
 
 # Configuração Dinâmica de URL para Produção
-BASE_URL = os.getenv("BACKEND_URL", "http://localhost:8000")
+# Atualizado para apontar corretamente para o seu serviço no Railway
+BASE_URL = os.getenv("BACKEND_URL", "https://angola-production.up.railway.app")
 
 # Configuração de Pasta Estática
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -30,7 +31,6 @@ if not os.path.exists(STATIC_DIR):
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
-# --- ALTERAÇÃO FEITA AQUI ---
 # Configuração de CORS para permitir comunicação apenas com o seu front-end na Vercel
 app.add_middleware(
     CORSMiddleware,
@@ -38,7 +38,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-# ----------------------------
 
 API_URL = "https://vanessa-gateway-api.tuyenecomesso.com/v1/inference"
 TOKEN = "vkg_live_yl7naJYI0nJbiQK9b2SaApJH32qImT6x"

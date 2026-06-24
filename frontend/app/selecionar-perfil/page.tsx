@@ -10,7 +10,7 @@ export default function SelecionarPerfil() {
     formData.append('user_id', userId);
     formData.append('workspace', tipo);
 
-    const res = await fetch('http://localhost:8000/auth/set-workspace', {
+    const res = await fetch('https://angola-production.up.railway.app/auth/set-workspace', {
       method: 'POST',
       body: formData
     });

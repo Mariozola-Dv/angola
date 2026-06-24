@@ -33,7 +33,7 @@ export default function AgroTwinPro() {
     formData.append("texto", "Analise as características físicas, topográficas e geográficas deste terreno. Retorne análise detalhada, mapa de altura, advertências e projeções visuais.");
 
     try {
-      const response = await fetch("http://localhost:8000/analisar", {
+      const response = await fetch("https://angola-production.up.railway.app/analisar", {
         method: "POST",
         body: formData,
       });

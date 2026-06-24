@@ -14,7 +14,7 @@ export default function LoginPage() {
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const res = await fetch("http://localhost:8000/auth/register", { method: "POST", body: formData });
+    const res = await fetch("https://angola-production.up.railway.app/auth/register", { method: "POST", body: formData });
     const data = await res.json();
     if (data.status === "ok") {
       alert("Conta criada com sucesso! Faça o login.");
@@ -27,7 +27,7 @@ export default function LoginPage() {
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const res = await fetch("http://localhost:8000/auth/login", { method: "POST", body: formData });
+    const res = await fetch("https://angola-production.up.railway.app/auth/login", { method: "POST", body: formData });
     const data = await res.json();
     
     console.log("Resposta do Login:", data);
